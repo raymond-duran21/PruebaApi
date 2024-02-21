@@ -1,0 +1,13 @@
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\bin\Debug\net7.0\WebApiTIC.Domain.deps.json
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\bin\Debug\net7.0\WebApiTIC.Domain.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\bin\Debug\net7.0\WebApiTIC.Domain.pdb
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.AssemblyInfoInputs.cache
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.AssemblyInfo.cs
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.csproj.CoreCompileInputs.cache
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\refint\WebApiTIC.Domain.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.pdb
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\ref\WebApiTIC.Domain.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\bin\Debug\net7.0\WebApiTIC.Domain.runtimeconfig.json
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Domain\obj\Debug\net7.0\WebApiTIC.Domain.genruntimeconfig.cache

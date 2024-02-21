@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "WebApiTIC.Application/1.0.0": {
+        "dependencies": {
+          "WebApiTIC.Domain": "1.0.0"
+        },
+        "runtime": {
+          "WebApiTIC.Application.dll": {}
+        }
+      },
+      "WebApiTIC.Domain/1.0.0": {
+        "runtime": {
+          "WebApiTIC.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebApiTIC.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebApiTIC.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

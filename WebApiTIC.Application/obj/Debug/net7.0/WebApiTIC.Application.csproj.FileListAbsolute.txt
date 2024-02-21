@@ -1,0 +1,15 @@
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\bin\Debug\net7.0\WebApiTIC.Application.deps.json
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\bin\Debug\net7.0\WebApiTIC.Application.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\bin\Debug\net7.0\WebApiTIC.Application.pdb
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\bin\Debug\net7.0\WebApiTIC.Domain.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\bin\Debug\net7.0\WebApiTIC.Domain.pdb
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.csproj.AssemblyReference.cache
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.AssemblyInfoInputs.cache
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.AssemblyInfo.cs
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.csproj.CoreCompileInputs.cache
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.csproj.CopyComplete
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\refint\WebApiTIC.Application.dll
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\WebApiTIC.Application.pdb
+C:\Users\raymond.delcarmen\Workspace\WebApiTIC\WebApiTIC.Application\obj\Debug\net7.0\ref\WebApiTIC.Application.dll
