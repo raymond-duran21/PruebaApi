@@ -22,37 +22,43 @@ namespace WebApiTIC.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WebApiTIC.Domain.Entities.Asignaciones", b =>
+            modelBuilder.Entity("WebApiTIC.Domain.Entities.Auditoria", b =>
                 {
-                    b.Property<int>("AsignacionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AsignacionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EmpleadosId")
-                        .HasColumnType("int");
+                    b.Property<string>("Accion")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EquiposId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaAsignacion")
+                    b.Property<DateTime?>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AsignacionId");
+                    b.Property<string>("ValorAnterior")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("EmpleadosId");
+                    b.Property<string>("ValorNuevo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Asignaciones");
+                    b.Property<string>("usuario")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("auditorias");
                 });
 
             modelBuilder.Entity("WebApiTIC.Domain.Entities.Empleados", b =>
                 {
-                    b.Property<int>("EmpleadosId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpleadosId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Cedula_Pasaporte")
                         .IsRequired()
@@ -70,34 +76,31 @@ namespace WebApiTIC.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EquipoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EmpleadosId");
+                    b.HasKey("Id");
 
                     b.ToTable("Empleados");
                 });
 
             modelBuilder.Entity("WebApiTIC.Domain.Entities.Equipos", b =>
                 {
-                    b.Property<int>("EquiposId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EquiposId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Almacenamiento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AsignacionesAsignacionId")
+                    b.Property<int?>("EmpleadosId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmpleadosId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("FechaAsignacion")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Marca")
                         .IsRequired()
@@ -111,6 +114,7 @@ namespace WebApiTIC.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre_Equipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observaciones")
@@ -130,44 +134,18 @@ namespace WebApiTIC.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EquiposId");
-
-                    b.HasIndex("AsignacionesAsignacionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmpleadosId");
 
                     b.ToTable("Equipos");
                 });
 
-            modelBuilder.Entity("WebApiTIC.Domain.Entities.Asignaciones", b =>
-                {
-                    b.HasOne("WebApiTIC.Domain.Entities.Empleados", "Empleados")
-                        .WithMany()
-                        .HasForeignKey("EmpleadosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Empleados");
-                });
-
             modelBuilder.Entity("WebApiTIC.Domain.Entities.Equipos", b =>
                 {
-                    b.HasOne("WebApiTIC.Domain.Entities.Asignaciones", null)
+                    b.HasOne("WebApiTIC.Domain.Entities.Empleados", null)
                         .WithMany("Equipos")
-                        .HasForeignKey("AsignacionesAsignacionId");
-
-                    b.HasOne("WebApiTIC.Domain.Entities.Empleados", "Empleados")
-                        .WithMany("Equipos")
-                        .HasForeignKey("EmpleadosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Empleados");
-                });
-
-            modelBuilder.Entity("WebApiTIC.Domain.Entities.Asignaciones", b =>
-                {
-                    b.Navigation("Equipos");
+                        .HasForeignKey("EmpleadosId");
                 });
 
             modelBuilder.Entity("WebApiTIC.Domain.Entities.Empleados", b =>

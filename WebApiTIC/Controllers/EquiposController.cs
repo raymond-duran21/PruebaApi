@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiTIC.Application.Contracts;
+using WebApiTIC.Application.DTOs.Equipos;
 using WebApiTIC.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -35,7 +36,7 @@ namespace WebApiTIC.Controllers
 
         // POST api/<EquiposController>
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Equipos equiposDto)
+        public async Task<IActionResult> Add([FromBody] CreateEquiposDto equiposDto)
         {
             var result = await equipos.AddAsync(equiposDto);
             return Ok(result);
@@ -43,7 +44,7 @@ namespace WebApiTIC.Controllers
 
         // PUT api/<EquiposController>/5
         [HttpPut]
-        public async Task<IActionResult> Update( [FromBody] Equipos equiposDto)
+        public async Task<IActionResult> Update([FromBody] UpdateEquiposDto equiposDto)
         {
             var result = await equipos.UpdateAsync(equiposDto);
             return Ok(result);
