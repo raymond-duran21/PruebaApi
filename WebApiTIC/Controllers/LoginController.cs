@@ -4,6 +4,8 @@ using WebApiTIC.Application.DTOs.Autenticacion;
 using WebApiTIC.Application.Implementations;
 using WebApiTIC.Application.Contracts;
 using Microsoft.Identity.Client;
+using System.IdentityModel.Tokens.Jwt;
+using WebApiTIC.Application.DTOs;
 
 namespace WebApiTIC.Controllers
 {
@@ -26,16 +28,35 @@ namespace WebApiTIC.Controllers
 
             if (result != null)
             {
-                var token = _jwtGenerator.GenerateJwtToken(result);
-
-                // Puedes devolver el token junto con otros datos que desees
-                return Ok(new { Token = token, Email = result.Email, Rol = result.Rol });
-                return Ok();
+                var token = await _jwtGenerator.DevolverToken(result);
+                return Ok(token);
             }
             else
             {
                 return Unauthorized("Credenciales no válidas");
             }
         }
+
+        /*[HttpPost("/ObtenerRefreshToken")]
+        public async Task<IActionResult> ObtenerRefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validacionTokenExpirado = tokenHandler.ReadJwtToken(request.RefreshToken);
+
+            if (validacionTokenExpirado.ValidTo > DateTime.UtcNow)
+                return BadRequest(new AutorizacionResponse { Resultado = false, Msg="Token no expirado"});
+
+
+            var autorizacion = new AutenticacionResultDto();
+            autorizacion.Email = validacionTokenExpirado.Claims.First(x => x.Type == JwtRegisteredClaimNames.NameId).Value.ToString();
+            
+
+            var autorizacionResponse = await _jwtGenerator.DevolverRefreshToken(request, autorizacion);
+
+            if (autorizacionResponse.Resultado)
+                return Ok(autorizacionResponse);
+            else
+                return BadRequest(autorizacionResponse);
+        }*/
     }
 }

@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace WebApiTIC.Application.DTOs.Empleados
 {
-    public record CreacionEmpleadosDto(string Nombre, string Cedula_Pasaporte, string Entidad, string Direccion, string Departamento);
+    public record CreacionEmpleadosDto(string Nombre, string Cedula_Pasaporte, string Puesto, string Departamento);
     
 }

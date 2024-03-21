@@ -8,7 +8,7 @@ namespace WebApiTIC.Application.Contracts
     public interface IEmpleados
     {
         Task<ServiceReponse> AddAsync(CreacionEmpleadosDto empleados);
-        Task<ServiceReponse> UpdateAsync(UpdateEmpleadosDto empleados);
+        Task<ServiceReponse> UpdateAsync(UpdateEmpleadosDto empleados, int id);
         Task<ServiceReponse> DeleteAsync(int id);
         Task<List<Empleados>> GetAsync();
         Task<Empleados> GetByIdAsync(int id);

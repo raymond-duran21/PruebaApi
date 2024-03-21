@@ -14,10 +14,22 @@ namespace WebApiTIC.Infrastructure.Data
         {
             return await base.SaveChangesAsync(cancellationToken);
         }
-
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Asignaciones> Asignaciones { get; set; }
         public DbSet<Empleados> Empleados { get; set;}
         public DbSet<Equipos> Equipos { get; set;}
-        public DbSet<Auditoria> auditorias { get; set;}
+        public DbSet<Auditoria> Auditorias { get; set;}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.Property(e => e.IsRevoked)
+                    .HasComputedColumnSql("iif(ExpiryDate < getdate(), convert(bit,0), convert(bit,1))");
+            });
+        }
 
     }
 }

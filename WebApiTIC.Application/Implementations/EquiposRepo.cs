@@ -36,19 +36,16 @@ namespace WebApiTIC.Application.Implementations
                 SO = equiposDto.SO,
                 Nombre_Equipo = equiposDto.Nombre_Equipo,
                 Observaciones = equiposDto.Observaciones,
-                EmpleadosId = equiposDto.EmpleadosId
+                Empleados_Cedula = equiposDto.Empleados_Cedula
             };
 
-            if(nuevoEquipo.EmpleadosId == 0)
+            if(nuevoEquipo.Empleados_Cedula == "")
             {
-                nuevoEquipo.EmpleadosId = null;
+                nuevoEquipo.Estado = "Disponible";
+                nuevoEquipo.Empleados_Cedula = null;
+                nuevoEquipo.FechaAsignacion = null;
             }
 
-
-            if (nuevoEquipo.EmpleadosId != null)
-            {
-                nuevoEquipo.FechaAsignacion = DateTime.Now;
-            }
 
             _context.Equipos.Add(nuevoEquipo);
             await _context.SaveChangesAsync();
@@ -58,10 +55,12 @@ namespace WebApiTIC.Application.Implementations
         public async Task<ServiceReponse> DeleteAsync(int id)
         {
             var equipos = await _context.Equipos.FindAsync(id);
-            if (equipos != null)
+            if (equipos == null)
             {
-                return new ServiceReponse(false, "Empleado no encontrado");
+                return new ServiceReponse(false, "Equipo no encontrado");
             }
+
+            await DeleteAsignaAsync(equipos.Serial);
 
             _context.Equipos.Remove(equipos);
             await _context.SaveChangesAsync();
@@ -74,9 +73,9 @@ namespace WebApiTIC.Application.Implementations
         public async Task<Equipos> GetByIdAsync(int id) =>
             await _context.Equipos.FindAsync(id);
 
-        public async Task<ServiceReponse> UpdateAsync(UpdateEquiposDto equiposDto)
+        public async Task<ServiceReponse> UpdateAsync(UpdateEquiposDto equiposDto, int id)
         {
-            var equipoExistente = await _context.Equipos.FindAsync(equiposDto.Id);
+            var equipoExistente = await _context.Equipos.FindAsync(id);
 
             if (equipoExistente == null)
             {
@@ -89,31 +88,23 @@ namespace WebApiTIC.Application.Implementations
             equipoExistente.Nombre_Equipo = equiposDto.Nombre_Equipo;
             equipoExistente.Observaciones = equiposDto.Observaciones;
 
-            if (equipoExistente.EmpleadosId != equiposDto.EmpleadosId)
-            {
-                equipoExistente.FechaAsignacion = DateTime.Now;
-            }
-
-            equipoExistente.EmpleadosId = equiposDto.EmpleadosId;
-
-            if (equiposDto.EmpleadosId == 0)
-            {
-                equipoExistente.EmpleadosId = null;
-                equipoExistente.FechaAsignacion = null;
-            }
-            if(equipoExistente.EmpleadosId == equiposDto.EmpleadosId && equipoExistente.FechaAsignacion == null)
-            {
-                equipoExistente.FechaAsignacion = DateTime.Now;
-            }
-
-            
-
             await _context.SaveChangesAsync();
 
             return new ServiceReponse(true, "Actualizado Correctamente");
         }
 
+        public async Task<ServiceReponse> DeleteAsignaAsync(string serial)
+        {
+            var asignaciones = await _context.Asignaciones.FirstOrDefaultAsync(e => e.EquipoId == serial);
+            if (asignaciones == null)
+            {
+                return new ServiceReponse(false, "Asignacion no encontrado");
+            }
 
+            _context.Asignaciones.Remove(asignaciones);
+            await _context.SaveChangesAsync();
+            return new ServiceReponse(true, "Borrado exitosamente");
+        }
 
-    }
+        }
 }

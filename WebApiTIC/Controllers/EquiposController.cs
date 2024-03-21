@@ -43,10 +43,10 @@ namespace WebApiTIC.Controllers
         }
 
         // PUT api/<EquiposController>/5
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateEquiposDto equiposDto)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update([FromBody] UpdateEquiposDto equiposDto, int id)
         {
-            var result = await equipos.UpdateAsync(equiposDto);
+            var result = await equipos.UpdateAsync(equiposDto, id);
             return Ok(result);
         }
 

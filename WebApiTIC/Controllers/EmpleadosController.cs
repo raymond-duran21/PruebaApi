@@ -26,7 +26,6 @@ namespace WebApiTIC.Controllers
             return Ok(data);
         }
 
-        // GET api/<EquiposController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetbyId(int id)
         {
@@ -34,7 +33,6 @@ namespace WebApiTIC.Controllers
             return Ok(data);
         }
 
-        // POST api/<EquiposController>
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreacionEmpleadosDto empleadosDto)
         {
@@ -42,15 +40,13 @@ namespace WebApiTIC.Controllers
             return Ok(result);
         }
 
-        // PUT api/<EquiposController>/5
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateEmpleadosDto empleadosDto)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update([FromBody] UpdateEmpleadosDto empleadosDto, int id)
         {
-            var result = await empleados.UpdateAsync(empleadosDto);
+            var result = await empleados.UpdateAsync(empleadosDto, id);
             return Ok(result);
         }
 
-        // DELETE api/<EquiposController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

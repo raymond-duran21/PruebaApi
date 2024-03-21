@@ -12,8 +12,8 @@ using WebApiTIC.Infrastructure.Data;
 namespace WebApiTIC.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240223123441_EliminacionTablaAsignaciones")]
-    partial class EliminacionTablaAsignaciones
+    [Migration("20240314184536_AddRefreshToken")]
+    partial class AddRefreshToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,46 @@ namespace WebApiTIC.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("WebApiTIC.Domain.Entities.Asignaciones", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Departamento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmpleadoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha_Asignacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NombreEmpleado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre_Equipo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Asignaciones");
+                });
 
             modelBuilder.Entity("WebApiTIC.Domain.Entities.Auditoria", b =>
                 {
@@ -71,15 +111,11 @@ namespace WebApiTIC.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Direccion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Entidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Puesto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -99,10 +135,13 @@ namespace WebApiTIC.Infrastructure.Migrations
                     b.Property<string>("Almacenamiento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EmpleadosId")
-                        .HasColumnType("int");
+                    b.Property<string>("Empleados_Cedula")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaAsignacion")
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FechaAsignacion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Marca")
@@ -117,6 +156,7 @@ namespace WebApiTIC.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre_Equipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observaciones")
@@ -138,21 +178,35 @@ namespace WebApiTIC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpleadosId");
-
                     b.ToTable("Equipos");
                 });
 
-            modelBuilder.Entity("WebApiTIC.Domain.Entities.Equipos", b =>
+            modelBuilder.Entity("WebApiTIC.Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("WebApiTIC.Domain.Entities.Empleados", null)
-                        .WithMany("Equipos")
-                        .HasForeignKey("EmpleadosId");
-                });
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-            modelBuilder.Entity("WebApiTIC.Domain.Entities.Empleados", b =>
-                {
-                    b.Navigation("Equipos");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("refreshTokens");
                 });
 #pragma warning restore 612, 618
         }

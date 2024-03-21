@@ -54,31 +54,32 @@ options.AddSecurityRequirement(new OpenApiSecurityRequirement()
 builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEmpleados, EmpleadosRepo>();
 builder.Services.AddScoped<IEquipos, EquiposRepo>();
+builder.Services.AddScoped<IAsignaciones, AsignacionesRepo>();
 builder.Services.AddScoped<IJwtGenerator, JwtToken>();
 builder.Services.AddScoped<IDbContext, AppDbContext>();
 builder.Services.AddScoped<ILogin, LoginRepo>();
 
-builder.Services.AddAuthentication(options =>
+var key = builder.Configuration.GetValue<string>("JwtSettings:Secret");
+var keyBytes = Encoding.ASCII.GetBytes(key);
+
+builder.Services.AddAuthentication(config =>
 {
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(options =>
+    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(config =>
+{
+    config.RequireHttpsMetadata = false;
+    config.SaveToken = true;
+    config.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration.GetValue<string>("JwtSettings:Issuer"),
-            ValidAudience = builder.Configuration.GetValue<string>("JwtSettings:Audience"),
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtSettings:Secret").Value)),
-            ClockSkew = TimeSpan.FromDays(5)
-        };
-    });
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -91,6 +92,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(
         opt => opt.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

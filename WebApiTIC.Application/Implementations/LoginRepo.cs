@@ -12,7 +12,7 @@ namespace WebApiTIC.Application.Implementations
 {
     public interface ILogin
     {
-        Task<AutenticationResultDto> Login(AutenticacionDto autenticacionDto);
+        Task<AutenticacionResultDto> Login(AutenticacionDto autenticacionDto);
     }
 
     public class LoginRepo : ILogin
@@ -24,16 +24,13 @@ namespace WebApiTIC.Application.Implementations
             _config = configuration;
         }
 
-        public async Task<AutenticationResultDto> Login(AutenticacionDto autenticacionDto)
+        public async Task<AutenticacionResultDto> Login(AutenticacionDto autenticacionDto)
         {
             var domainName = _config.GetSection("ADConfig:Domain").Value;
-
             var formattedEmail = autenticacionDto.email.Trim();
             var formattedPass = autenticacionDto.password.Trim();
-
             var adContext = new PrincipalContext(ContextType.Domain, domainName);
             var result = adContext.ValidateCredentials(formattedEmail, formattedPass);
-
             
             if (!result)
             {
@@ -57,7 +54,7 @@ namespace WebApiTIC.Application.Implementations
 
                     if (!string.IsNullOrEmpty(userRoles) && accessRole.Contains(userRoles))
                     {
-                        return new AutenticationResultDto
+                        return new AutenticacionResultDto
                         {
                             Email = userEmail,
                             Rol = userRoles

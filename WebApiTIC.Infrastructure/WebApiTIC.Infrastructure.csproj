@@ -21,8 +21,4 @@
     <ProjectReference Include="..\WebApiTIC.Domain\WebApiTIC.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

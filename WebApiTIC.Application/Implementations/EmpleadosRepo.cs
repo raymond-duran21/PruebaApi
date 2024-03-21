@@ -27,8 +27,7 @@ namespace WebApiTIC.Application.Implementations
             {
                 Nombre = empleadoDto.Nombre,
                 Cedula_Pasaporte = empleadoDto.Cedula_Pasaporte,
-                Entidad = empleadoDto.Entidad,
-                Direccion = empleadoDto.Direccion,
+                Puesto = empleadoDto.Puesto,
                 Departamento = empleadoDto.Departamento,
             };
 
@@ -40,11 +39,10 @@ namespace WebApiTIC.Application.Implementations
         public async Task<ServiceReponse> DeleteAsync(int id)
         {
             var empleados = await _context.Empleados.FindAsync(id);
-            if (empleados != null)
+            if (empleados == null)
             {
                 return new ServiceReponse(false, "Empleado no encontrado");
             }
-
             _context.Empleados.Remove(empleados);
             await _context.SaveChangesAsync();
             return new ServiceReponse(true, "Borrado exitosamente");
@@ -58,18 +56,16 @@ namespace WebApiTIC.Application.Implementations
             await _context.Empleados.FindAsync(id);
         
 
-        public async Task<ServiceReponse> UpdateAsync(UpdateEmpleadosDto empleadosDto)
+        public async Task<ServiceReponse> UpdateAsync(UpdateEmpleadosDto empleadosDto, int id)
         {
             
-            var empleadoExistente = await _context.Empleados.FindAsync(empleadosDto.Id);
+            var empleadoExistente = await _context.Empleados.FindAsync(id);
 
             if (empleadoExistente == null)
             {
                 return new ServiceReponse(false, "Empleado no encontrado. No se puede actualizar.");
             }
-
-            empleadoExistente.Entidad = empleadosDto.Entidad;
-            empleadoExistente.Direccion = empleadosDto.Direccion;
+            empleadoExistente.Puesto = empleadosDto.Puesto;
             empleadoExistente.Departamento = empleadosDto.Departamento;
 
 

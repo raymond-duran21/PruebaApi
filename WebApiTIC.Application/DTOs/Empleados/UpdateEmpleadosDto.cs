@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace WebApiTIC.Application.DTOs.Empleados
 {
-    public record UpdateEmpleadosDto(int Id, string Entidad, string Direccion, string Departamento);
+    public record UpdateEmpleadosDto(int Id, string Puesto, string Departamento);
 
 }

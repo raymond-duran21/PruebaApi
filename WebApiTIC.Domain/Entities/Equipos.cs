@@ -17,7 +17,8 @@ namespace WebApiTIC.Domain.Entities;
         public string? Procesador {  get; set; }
         public string? SO { get; set; }
         public string Nombre_Equipo { get; set; }
-        public int? EmpleadosId { get; set; }
+        public string? Empleados_Cedula { get; set; }
         public string? Observaciones { get; set; }
+        public string? Estado {  get; set; }
         public DateTime? FechaAsignacion {  get; set; }
     }

@@ -11,8 +11,6 @@ namespace WebApiTIC.Domain.Entities;
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Cedula_Pasaporte { get; set; }
-        public string Entidad { get; set; }
-        public string Direccion { get; set; }
+        public string Puesto { get; set; }
         public string Departamento { get; set; }
-        public virtual  ICollection<Equipos> Equipos { get; set; }
     }
