@@ -38,12 +38,12 @@ namespace WebApiTIC.Infrastructure.Authentication
 
             var credencialesToken = new SigningCredentials(
                 new SymmetricSecurityKey(keyBytes),
-                SecurityAlgorithms.HmacSha256);
+                SecurityAlgorithms.HmacSha256Signature);
 
 
             var token = new SecurityTokenDescriptor {
                 Subject = claims,
-                Expires = DateTime.UtcNow.AddDays(10),
+                Expires = DateTime.UtcNow.AddMinutes(7),
                 SigningCredentials = credencialesToken,
             };
 
@@ -55,17 +55,7 @@ namespace WebApiTIC.Infrastructure.Authentication
             return tokenCreado;
 
         }
-        public async Task<AutorizacionResponse> DevolverToken(AutenticacionResultDto autorizacion)
-        {
-            string tokencreado = GenerateJwtToken(autorizacion);
-
-            /*string refreshTokenCreado = GenerarRefreshToken();*/
-
-            return new AutorizacionResponse(){Token = tokencreado, Resultado = true, Msg = "Ok"};
-
-           /*DevolverRefreshTokenInter(autorizacion.Email.ToString(), refreshTokenCreado);*/
-        }
-        /*
+        
         private string GenerarRefreshToken() 
         {
             var byteArray = new byte[64];
@@ -79,39 +69,51 @@ namespace WebApiTIC.Infrastructure.Authentication
             return refreshToken;
         }
 
-        private async Task<AutorizacionResponse> DevolverRefreshTokenInter(string UserId, string refreshToken)
+        private async Task<AutorizacionResponse> DevolverRefreshTokenInter(string UserId, string token, string refreshToken)
         {
             var GuardarrefreshToken = new RefreshToken
             {
                 UserId = UserId,
-                Token = refreshToken,
+                Token = token,
+                RefreshTokenV = refreshToken,
                 AddedDate = DateTime.Now,
                 ExpiryDate = DateTime.Now.AddMinutes(7),
-                IsRevoked = true,
             };
 
             await _context.RefreshTokens.AddAsync(GuardarrefreshToken);
             await _context.SaveChangesAsync();
 
-            return new AutorizacionResponse() { RefreshToken = refreshToken, Resultado = true, Msg = "Ok" };
+            return new AutorizacionResponse() {Token = token, RefreshToken = refreshToken, Resultado = true, Msg = "Ok" };
 
+        }
+
+        public async Task<AutorizacionResponse> DevolverToken(AutenticacionResultDto autorizacion)
+        {
+            string tokencreado = GenerateJwtToken(autorizacion);
+
+            string refreshTokenCreado = GenerarRefreshToken();
+
+            //return new AutorizacionResponse(){Token = tokencreado, Resultado = true, Msg = "Ok"};
+
+            return await DevolverRefreshTokenInter(autorizacion.Email.ToString(), tokencreado, refreshTokenCreado);
         }
 
         public async Task<AutorizacionResponse> DevolverRefreshToken(RefreshTokenRequest refreshTokenRequest, AutenticacionResultDto autorizacion)
         {
-            var refreshTokenEncontrado = _context.RefreshTokens.FirstOrDefault(x => x.Token == refreshTokenRequest.RefreshToken && x.UserId == autorizacion.Email);
+            var refreshTokenEncontrado = _context.RefreshTokens.FirstOrDefault(x => 
+            x.Token == refreshTokenRequest.TokenExpirado && 
+            x.Token == refreshTokenRequest.RefreshToken && 
+            x.UserId == autorizacion.Email);
 
             if(refreshTokenEncontrado == null)
             {
                 return new AutorizacionResponse{ Resultado = false, Msg = "No existe RefreshToken"};
             }
-
             var refreshTokenCreado = GenerarRefreshToken();
             var tokenCreado = GenerateJwtToken(autorizacion);
 
-            return await DevolverRefreshTokenInter(autorizacion.Email, refreshTokenCreado);
-
+            return await DevolverRefreshTokenInter(autorizacion.Email, tokenCreado, refreshTokenCreado);
         }
-        */
+        
     }
 }

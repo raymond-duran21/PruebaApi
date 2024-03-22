@@ -11,6 +11,6 @@ namespace WebApiTIC.Application.Contracts
     public interface IJwtGenerator
     {
         Task<AutorizacionResponse> DevolverToken(AutenticacionResultDto autorizacion);
-        /*sk<AutorizacionResponse> DevolverRefreshToken(RefreshTokenRequest refreshTokenRequest, AutenticacionResultDto autorizacion);*/
+        Task<AutorizacionResponse> DevolverRefreshToken(RefreshTokenRequest refreshTokenRequest, AutenticacionResultDto autorizacion);
     }
 }

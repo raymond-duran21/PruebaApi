@@ -37,11 +37,11 @@ namespace WebApiTIC.Controllers
             }
         }
 
-        /*[HttpPost("/ObtenerRefreshToken")]
+        [HttpPost("/ObtenerRefreshToken")]
         public async Task<IActionResult> ObtenerRefreshToken([FromBody] RefreshTokenRequest request)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var validacionTokenExpirado = tokenHandler.ReadJwtToken(request.RefreshToken);
+            var validacionTokenExpirado = tokenHandler.ReadJwtToken(request.TokenExpirado);
 
             if (validacionTokenExpirado.ValidTo > DateTime.UtcNow)
                 return BadRequest(new AutorizacionResponse { Resultado = false, Msg="Token no expirado"});
@@ -57,6 +57,6 @@ namespace WebApiTIC.Controllers
                 return Ok(autorizacionResponse);
             else
                 return BadRequest(autorizacionResponse);
-        }*/
+        }
     }
 }
